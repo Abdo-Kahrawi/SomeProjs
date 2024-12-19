@@ -74,7 +74,9 @@ int main() {
 		{' ', ' ', ' '}
 	};
 
-	int row, column, turn; char player1 = 'X'; char player2 = 'O'; turn = 0; char userchar;
+	int row, column, turn, Xcounter, Ocounter, yesorno; char player1 = 'X'; char player2 = 'O'; turn = 0; char userchar; string Conorend;
+
+	Xcounter = 0; Ocounter = 0;
 
 	cout << "Welcome to our game: TIC TAC TOE \n";
 
@@ -112,6 +114,7 @@ int main() {
 			else
 				break;
 		}
+		
 
 		board[row][column] = userchar;
 
@@ -119,9 +122,22 @@ int main() {
 
 			DrawBoard(board);
 
-			cout << "Player " << userchar << " is the WINNER!\n";
+			if (userchar == 'X')
+				Xcounter++;
+			else
+				Ocounter++;
 
-			break;
+
+			cout << "Player " << userchar << " is the WINNER!\n" << setw(10) << "X Player won " << Xcounter << " times\n" << setw(10) << "O Player won " << Ocounter << " times\n";
+
+			cout << "Want to continue? Enter 1 now!: "; cin >> yesorno;
+
+			if (yesorno== 1) {
+				continue;
+			}
+			else{
+			    break;
+			}
 		}
 	}
 		
