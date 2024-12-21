@@ -18,6 +18,8 @@ void DrawBoard(char[3][3]);
 
 bool CheckWin(char[3][3], char);
 
+bool CheckDraw(char[3][3], int, int);
+
 
 int main() {
 
@@ -74,9 +76,9 @@ int main() {
 		{' ', ' ', ' '}
 	};
 
-	int row, column, turn, Xcounter, Ocounter, yesorno; char player1 = 'X'; char player2 = 'O'; turn = 0; char userchar; string Conorend;
+	int row, column, turn, Xcounter, Ocounter, yesorno, Usercounter; char player1 = 'X'; char player2 = 'O'; turn = 0; char userchar; string Conorend;
 
-	Xcounter = 0; Ocounter = 0;
+	Xcounter = 0; Ocounter = 0; Usercounter = 0;
 
 	cout << "Welcome to our game: TIC TAC TOE \n";
 
@@ -86,26 +88,40 @@ int main() {
 
 
 		while (true) {
+			
+			switch (Usercounter) {
+			case 0:
+				cout << "Who are you? Choose X or O: "; cin >> userchar;
 
-			cout << "Who are you? Choose X or O: "; cin>> userchar; 
+				if (userchar == 'X')
 
-			if (userchar == 'X')
+					userchar = 'X';
 
-				userchar = 'X';
+				else if (userchar == 'O')
 
-			else if (userchar == 'O')
+					userchar = 'O';
 
-				userchar = 'O';
+				else {
+					cout << "Invalid Input. Try again. (X or O)\n"; cin >> userchar;
 
-			else {
-				cout << "Invalid Input. Try again. (X or O)\n"; cin >> userchar;
+					userchar = ' ';
+				}
+				break;
+			default: if (userchar == 'X') {
+				cout << "Now, it's Player O's turn to play: "; cin >> userchar;
+			}
+				   else {
+				cout << "Now, it's Player X's turn to play: "; cin >> userchar;
 
-				userchar = ' ';
+			       }
 			}
 
 			cout << "Enter row and column (from 0 to 2 only): ";
 
 			cin >> row >> column;
+
+			Usercounter++;
+
 
 			if (board[row][column] != ' ' || row < 0 || row > 2 || column < 0 || column > 2)
 
@@ -123,21 +139,39 @@ int main() {
 			DrawBoard(board);
 
 			if (userchar == 'X')
+
 				Xcounter++;
+
 			else
+
 				Ocounter++;
 
 
 			cout << "Player " << userchar << " is the WINNER!\n" << setw(10) << "X Player won " << Xcounter << " times\n" << setw(10) << "O Player won " << Ocounter << " times\n";
 
+
 			cout << "Want to continue? Enter 1 now!: "; cin >> yesorno;
 
-			if (yesorno== 1) {
+			if (yesorno== 1) 
+
 				continue;
-			}
-			else{
+			
+			else
+
 			    break;
-			}
+			
+		}
+		if (CheckDraw(board,3,3))
+		{
+			cout << "Draw!! How close that was! Want to continue? Enter 1 now!: "; cin >> yesorno;
+
+			if (yesorno == 1)
+
+				continue;
+
+			else
+
+				break;
 		}
 	}
 		
@@ -191,11 +225,33 @@ bool CheckWin(char board[3][3], char XorO) {
 		return true;
 
 	if (board[0][2] == XorO && board[1][1] == XorO && board[2][0] == XorO)
-		return true;
-
+		return true; 
+		
 	return false;
 }
 
+bool CheckDraw(char board[3][3], int row, int column) {
+
+	bool draw = false;
+
+	for (int i = 0; i < row; i++) {
+
+		for (int j = 0; j < column; j++) {
+
+			if (board[i][j] != ' ')
+				draw = true;
+			else {
+				draw = false; break;
+			}
+		}
+
+	}
+	switch (draw) {
+	case true: return draw; break;
+
+	default: return draw;
+}
+}
 
 
 
